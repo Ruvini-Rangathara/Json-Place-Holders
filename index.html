@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Json Place Holder</title>
+
+  <style>
+
+    #button_div{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100vw;
+      height: 10vh;
+    }
+
+    #dataContainer{
+        background-color: darkgray;
+        padding: 50px;
+        border: 1px solid gray;
+        border-radius: 10px;
+    }
+
+    button{
+      width: 80px;
+      height: 40px;
+      background-color: mediumpurple;
+      border-radius: 10px;
+      border: 1px solid rebeccapurple;
+    }
+  </style>
+
+</head>
+<body>
+
+<div id="button_div">
+  <button onclick="load()">Click</button>
+</div>
+
+
+<!-- Create a div with the ID "dataContainer" to display the fetched data -->
+<div id="dataContainer"></div>
+
+<script>
+    function load(){
+        fetch('https://jsonplaceholder.typicode.com/comments')
+            .then(response => response.json())
+            .then(data => {
+                // Process the data here
+                const dataContainer = document.getElementById('dataContainer');
+
+                // Loop through the data array and create elements to display the information
+                data.forEach(item => {
+                    const postDiv = document.createElement('div');
+                    postDiv.innerHTML = `
+                    <h3>${item.name}</h3>
+                    <p>Email: ${item.email}</p>
+                    <p>Body: ${item.body}</p><br>
+                `;
+                    dataContainer.appendChild(postDiv);
+                });
+            })
+            .catch(error => {
+                console.log('Error:', error);
+            });
+    }
+
+</script>
+
+
+
+</body>
+</html>
